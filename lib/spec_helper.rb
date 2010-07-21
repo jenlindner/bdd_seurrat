@@ -1,0 +1,1 @@
+#Rspec.configure {|c| c.color_enabled = true}

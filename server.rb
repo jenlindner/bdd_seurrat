@@ -1,9 +1,10 @@
 require 'rubygems'
 require 'sinatra'
 require 'haml'
+require '../seurrat/lib/photo_artist'
 
 post "/read_image" do
-  Image.process
+  PhotoArtist.process  
 end
 
 get "/" do 

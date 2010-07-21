@@ -1,7 +1,12 @@
 require 'pusher'
 require 'RMagick'
 
-class Image
+class PhotoArtist
+  
+  Pusher.app_id = '1436'
+  Pusher.key = '279b70cc663845e74c75'
+  Pusher.secret = '4491a3468b2f7d0ece6e'
+    
   
   def self.process(path = "public/images/distance.jpg")
     image = Magick::ImageList.new(path)
@@ -12,9 +17,9 @@ class Image
         pixels = image.get_pixels((x * 10), (y * 10), 10, 10)
         colors_of_row << darkest(pixels)
       end
-
-      Pusher["image_data"].trigger("send_colors", :y => (y * 10), :colors => colors_of_row)
+      Pusher["image_data"].trigger("begin_painting", :y => (y * 10), :colors => colors_of_row)
     end
+    
   end
   
   def self.darkest(pixels)
