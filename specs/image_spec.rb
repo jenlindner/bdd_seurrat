@@ -1,6 +1,5 @@
 $LOAD_PATH << "lib"
 require 'photo_artist'
-require 'cat'
 require 'spec_helper'
 
 describe PhotoArtist do
@@ -17,7 +16,7 @@ describe PhotoArtist do
   
   it "creates an image with darkest pixels if asked for dark pixels" do
      PhotoArtist.get_darkest_pixels
-     PhotoArtist.draw
+     PhotoArtist.paint
      #expects darkest pixels of test square in original to match darkest pixels in created image
   end
     
