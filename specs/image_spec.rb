@@ -5,22 +5,39 @@ require 'spec_helper'
 describe PhotoArtist do
   it "pushes row color data to pusher" do
     mock_channel = mock("channel")
-    mock_channel.should_receive(:trigger).with("send_colors", :y => 0, :colors => ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,1,0)"])
-    mock_channel.should_receive(:trigger).with("send_colors", :y => 10, :colors => ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"])
+    mock_channel.should_receive(:trigger).with("begin_painting", :y => 0, :colors => ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,1,0)"])
+    mock_channel.should_receive(:trigger).with("begin_painting", :y => 10, :colors => ["rgb(0,0,0)", "rgb(0,0,0)", "rgb(0,0,0)"])
     Pusher.should_receive("[]").twice.with("image_data").and_return(mock_channel)
-    PhotoArtist.process("specs/data/test.jpg")
+    PhotoArtist.paint("specs/data/test.jpg")
   end
   
   
-  it "creates a new image and saves it"
+  it "creates a new image and saves it" do 
+    path = PhotoArtist.save_image
+    #is_a_file?
+  end
+
   
-  it "creates an image with darkest pixels if asked for dark pixels" do
-     PhotoArtist.get_darkest_pixels
-     PhotoArtist.paint
-     #expects darkest pixels of test square in original to match darkest pixels in created image
+  it "paints with darkest pixels if asked for dark pixels" do
+    mock_pixel1 = mock("pixel1")
+    mock_pixel1.should_receive("red").twice.and_return(2)
+    mock_pixel1.should_receive("green").twice.and_return(33)
+    mock_pixel1.should_receive("blue").twice.and_return(12)
+
+    mock_pixel2 = mock("pixel2")
+    mock_pixel2.should_receive("red").and_return(223)
+    mock_pixel2.should_receive("green").and_return(124)
+    mock_pixel2.should_receive("blue").and_return(206)    
+    
+    pixels = []
+    pixels << mock_pixel1
+    pixels << mock_pixel2
+    pixel = PhotoArtist.darkest_pixels(pixels)
+    pixel.should == "rgb(2,33,12)"
+    
   end
     
-  it "creates its image with red pixels if asked for red pixels"
+  it "paints with red pixels if asked for red pixels"
   it "should create zoom effect by accurately enlarging a given rectangle of pixels"
   it "should slowly draw one row at a time"
   it "should draw its image so that it appears all at once to user"

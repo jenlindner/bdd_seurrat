@@ -4,7 +4,7 @@ require 'haml'
 require '../seurrat/lib/photo_artist'
 
 post "/read_image" do
-  PhotoArtist.process  
+  PhotoArtist.paint  
 end
 
 get "/" do 
