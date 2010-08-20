@@ -20,9 +20,6 @@ describe("Photo Artist", function(){
 
 		mockSquare = {
 			fillRect: function(a,b,c,d) {
-				expect(b).toEqual(10);
-				expect(c).toEqual(20);
-				expect(d).toEqual(20);
 				fillRectCalled = true;
 			},
 		};
@@ -39,5 +36,7 @@ describe("Photo Artist", function(){
 		
 		expect(seurrat.downloads.length).toBeGreaterThan(previous_number_of_downloads);
 	});
+	
+	it("should color at a specified factor of pixel-squares");
   
 });

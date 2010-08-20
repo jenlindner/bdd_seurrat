@@ -1,5 +1,4 @@
 function setEverythingUp($){
-	
 	var element = document.getElementById('canvas');
 	var canvas = element.getContext('2d');
 	
@@ -7,8 +6,9 @@ function setEverythingUp($){
 	paint.bind('begin_painting', function(data){
 		var x = 0;
 		data.colors.forEach(function(color) {
-			seurrat.color(canvas, x, data.y, color);
-			x += 10;
+			seurrat.color(canvas, x, data.y, color, 5);
+			//have to make sure it colors first < 10 -- mind the gap
+			x += 5;
 		});
 	});
 }
@@ -16,10 +16,10 @@ function setEverythingUp($){
 $(document).ready(function() { setEverythingUp(jQuery) });
 
 var seurrat = {
-	color: function(el,x,y,color){
+	color: function(el,x,y,color,factor){
 		el.fillStyle = color;
-		el.fillRect(x,y,x+10,y+10);
-	},
+		el.fillRect(x,y,x+5,y+5);
+	},	
 	downloads: [],
 	export_art: function(el){
 		if (seurrat.export_png(el)){

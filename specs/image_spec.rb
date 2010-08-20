@@ -11,13 +11,6 @@ describe PhotoArtist do
     PhotoArtist.paint("specs/data/test.jpg")
   end
   
-  
-  it "creates a new image and saves it" do 
-    path = PhotoArtist.save_image
-    #is_a_file?
-  end
-
-  
   it "paints with darkest pixels if asked for dark pixels" do
     mock_pixel1 = mock("pixel1")
     mock_pixel1.should_receive("red").twice.and_return(2)
@@ -37,54 +30,51 @@ describe PhotoArtist do
     
   end
     
+  it "should have a non-pixelated zoom option"
+  it "should let the user select the zoom factor"  
   it "paints with red pixels if asked for red pixels"
-  it "should create zoom effect by accurately enlarging a given rectangle of pixels"
+  it "should learn an image's height and width and return zoom factor in x and y values" do 
+    #zoom is going to have to be a pull-down at some point, for user to select factor.
+  end
+  it "should pixelate by selecting middle pixel out of ten by ten square, not darkest one"
+  it "should pixelate by selecting middle pixel out of five by five square, not darkest one"
+  
+   
+  it "should zoom by a determined factor" do 
+  end
+  it "should paint at determined levels of pixelarity"
+  it "should create zoom effect by selecting a small rectangle and drawing it bigger" do    
+    path = "specs/data/test.jpg"
+    #this is hard-coded, and there are ten thousand expectations here. not good. but a good start.
+    
+    Magick::ImageList.should_receive(:new).with(path).and_return(mock())
+    image = Magick::ImageList.new(path)
+    
+    image.should_receive(:rows).and_return(20)
+    image.rows
+
+    image.should_receive(:columns).and_return(30)
+    image.columns
+    
+    #should get image's height and width and divide by something in order to create a factor
+    
+    image.should_receive(:crop).with(Magick::CenterGravity, 22, 16).and_return(mock())
+    cropped_image = image.crop(Magick::CenterGravity, 22, 16)
+    cropped_image.should_receive(:resize).with(88,32).and_return(mock())
+    zoomed_image = cropped_image.resize(88,32)
+    
+    mock_rgb_values = mock("rgb")
+ 
+    PhotoArtist.should_receive(:zoom)
+    PhotoArtist.zoom()
+    PhotoArtist.should_receive(:zoom_paint)
+    PhotoArtist.zoom_paint()
+  end
+  
   it "should slowly draw one row at a time"
   it "should draw its image so that it appears all at once to user"
+  it "should draw its image by having all dark dots show up first, then less dark, then least dark"
   
   
 end
 
-
-# okay so it's always about the state of an object. you're always using methods to change the state of something
-# and then testing one public method by checking state -- but never really testing inner private methods
-# object uses to accomplish its evil tasks. you don't test methods per se. So you're also always building objects.
-# so i have an image processing object. what do i want to test? the state it leaves its targets in after it's done 
-# its processing on them. And actually really it's a drawing program. it draws and creates new images. it creates 
-# its own paint from one image, so one thing to test might be that it creates the kind of paint it wants to: if 
-# it wants darkest or reddest or bluest pixels, then make sure it gets those pixel values correctly. the other thing 
-# will be the zoom factor. if it wants to select a range in one picture to draw larger in aanother, you should check 
-# that it accomplishes this. perhaps by confirming rgb values in one place are the same as where they end up, in correct
-# size ratio.
-
-
-# describe Cat do
-#   before(:each) do
-#     @kitty = Cat.new
-#   end
-#   
-#   it "says meow" do
-#     Cat.new.say.should match "meow"
-#   end
-#   
-#   it "drinks wine and speaks french" do
-#    Cat.new.drinks("wine").should_not match "nien fraulien"
-#   end
-#   
-#   it "purrs when given love" do
-#     #mock_love = mock("love")
-#     @kitty.should respond_to :purrs
-#   end
-#   
-#   it "wants to be outside" do
-#     @kitty.tries_to_go_outside
-#     @kitty.is_happy.should == false
-#   end
-#   
-#   it "is happy if outside" do
-#       puts @kitty.is_outside
-#       @kitty.goes_outside
-#       puts @kitty.is_outside
-#       @kitty.is_outside == true
-#     end
-#   end
